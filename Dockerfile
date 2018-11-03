@@ -16,7 +16,7 @@ RUN mkdir -p /tmp/libbot2 && \
   ./scripts/setup/linux/ubuntu/$UBUNTU_DISTRIB_CODENAME/install_prereqs && \
   rm -rf /var/lib/apt/lists/* && \
   # build libbot2
-  BUILD_PREFIX=$LIBBOT2_INSTALL_DIR make && \
+  BUILD_PREFIX=$LIBBOT2_INSTALL_DIR make -j && \
   # remove source code
   cd / && \
   rm -rf /tmp/libbot2
