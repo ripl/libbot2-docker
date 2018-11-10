@@ -8,6 +8,7 @@ ENV LIBBOT2_INSTALL_DIR $INSTALL_DIR
 
 # build libbot2 from source
 RUN mkdir -p /tmp/libbot2 && \
+  cd /tmp/libbot2 && \
   # download libbot2
   wget --no-check-certificate https://github.com/ripl-ttic/libbot2/archive/master.tar.gz && \
   tar -zxvf master.tar.gz && \
