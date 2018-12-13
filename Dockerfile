@@ -1,4 +1,4 @@
-FROM afdaniele/lcm:1.4.0
+FROM ripl/lcm:1.4.0
 
 # arguments
 ARG INSTALL_DIR=/usr/local
