@@ -6,6 +6,12 @@ ARG INSTALL_DIR=/usr/local
 # environment variables
 ENV LIBBOT2_INSTALL_DIR $INSTALL_DIR
 
+# install dependencies
+RUN apt update \
+  && apt install -y \
+    sudo \
+  && rm -rf /var/lib/apt/lists/*
+
 # build libbot2 from source
 RUN mkdir -p /tmp/libbot2 && \
   cd /tmp/libbot2 && \
