@@ -1,0 +1,9 @@
+{
+    "description": "Libbot2",
+    "maintainer": "ripl",
+    "name": "libbot2",
+    "organization": "ripl",
+    "schema": "1.0",
+    "template": null,
+    "version": "0.0.0"
+}
