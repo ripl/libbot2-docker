@@ -93,9 +93,6 @@ ARG INSTALL_DIR=/usr/local
 # environment variables
 ENV LIBBOT2_INSTALL_DIR $INSTALL_DIR
 
-ENV LCM_PYTHON_DIR_HINTS=/usr/local/lib/python3/dist-packages/
-ENV PYTHON_PATH=${PYTHON_PATH}:/usr/local/lib/python3/dist-packages/
-
 # build libbot2 from source
 RUN \
   mkdir -p /tmp/libbot2 && \
