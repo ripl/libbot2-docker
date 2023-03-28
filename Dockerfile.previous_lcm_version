@@ -1,4 +1,4 @@
-FROM ripl/lcm:1.4.0_trusty
+FROM ripl/lcm:1.4.0_focal
 
 # arguments
 ARG INSTALL_DIR=/usr/local
@@ -16,8 +16,13 @@ RUN mkdir -p /tmp/libbot2 && \
   # install dependencies, then clean the apt cache
   ./scripts/setup/linux/ubuntu/$UBUNTU_DISTRIB_CODENAME/install_prereqs && \
   rm -rf /var/lib/apt/lists/* && \
+  cd .. && \
+  mkdir libbot2-build && \
   # build libbot2
-  BUILD_PREFIX=$LIBBOT2_INSTALL_DIR make -j && \
+  cd libbot2-build && \
+  cmake -DCMAKE_INSTALL_PREFIX=$LIBBOT2_INSTALL_DIR ../libbot2-master && \
+  make install && \
+  #BUILD_PREFIX=$LIBBOT2_INSTALL_DIR make -j && \
   # remove source code
   cd / && \
   rm -rf /tmp/libbot2
