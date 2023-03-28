@@ -1,48 +1,29 @@
 pipeline {
   agent any
-  environment {
-    // Common variables
-    LCM_VERSION = "1.4.0"
-
-    // Tag: latest
-    BASE_IMAGE_LATEST = "ripl/lcm:${LCM_VERSION}"
-    BUILD_IMAGE_LATEST = "ripl/libbot2:latest"
-
-    // Tag: trusty
-    BASE_IMAGE_TRUSTY = "ripl/lcm:${LCM_VERSION}_trusty"
-    BUILD_IMAGE_TRUSTY = "ripl/libbot2:trusty"
+  triggers {
+    githubPush()
   }
   stages {
     stage('Update Base Image') {
       steps {
-        sh 'docker pull $BASE_IMAGE_LATEST'
-
-        sh 'docker pull $BASE_IMAGE_TRUSTY'
+        sh 'make pre-build'
       }
     }
     stage('Build Image') {
       steps {
-        sh 'docker build -t $BUILD_IMAGE_LATEST -f Dockerfile ./'
-
-        sh 'docker build -t $BUILD_IMAGE_TRUSTY -f Dockerfile_trusty ./'
+        sh 'make docker-build'
       }
     }
     stage('Push Image') {
       steps {
-        withDockerRegistry(credentialsId: 'DockerHub', url: 'https://index.docker.io/v1/') {
-          sh 'docker push $BUILD_IMAGE_LATEST'
-
-          sh 'docker push $BUILD_IMAGE_TRUSTY'
+        withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+          sh 'make push'
         }
       }
     }
     stage('Clean up') {
       steps {
-        sh 'docker rmi $BUILD_IMAGE_LATEST'
-        sh 'docker rmi $BASE_IMAGE_LATEST'
-
-        sh 'docker rmi $BUILD_IMAGE_TRUSTY'
-        sh 'docker rmi $BASE_IMAGE_TRUSTY'
+        sh 'make cleanup'
 
         cleanWs()
       }
