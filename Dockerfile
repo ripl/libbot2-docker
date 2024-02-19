@@ -6,11 +6,14 @@ ARG INSTALL_DIR=/usr/local
 # environment variables
 ENV LIBBOT2_INSTALL_DIR $INSTALL_DIR
 
-# install dependencies
-RUN apt update \
-  && apt install -y \
-    sudo \
-  && rm -rf /var/lib/apt/lists/*
+# update apt lists and install system libraries, then clean the apt cache
+RUN apt update && apt install -y \
+    lsb-release \
+    # clean the apt cache
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo "Codename is: $(lsb_release -c -s)"
+RUN ["echo", "$(lsb_release -c -s)"]
 
 # build libbot2 from source
 RUN mkdir -p /tmp/libbot2 && \
@@ -20,6 +23,7 @@ RUN mkdir -p /tmp/libbot2 && \
   tar -zxvf master.tar.gz && \
   cd libbot2-master && \
   # install dependencies, then clean the apt cache
+  UBUNTU_DISTRIB_CODENAME=$(lsb_release -c -s) && \
   ./scripts/setup/linux/ubuntu/$UBUNTU_DISTRIB_CODENAME/install_prereqs && \
   rm -rf /var/lib/apt/lists/* && \
   cd .. && \
