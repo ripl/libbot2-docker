@@ -46,5 +46,5 @@ jobs:
           context: .
           platforms: linux/arm64/v8,linux/amd64
           push: true
-          tags: ripl/lcm:latest, ripl/libbot2:${{ env.UBUNTU_VERSION_LATEST }}
+          tags: ripl/libbot2:latest, ripl/libbot2:${{ env.UBUNTU_VERSION_LATEST }}
           build-args: UBUNTU_VERSION=${{ env.UBUNTU_VERSION_LATEST }}
