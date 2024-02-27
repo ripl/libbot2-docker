@@ -1,4 +1,12 @@
-FROM ripl/lcm:latest
+# Parameters
+ARG REPO_NAME="libbot2-docker"
+ARG DESCRIPTION="Contains the libbot libraries and executables"
+ARG MAINTAINER="Matthew Walter (mwalter@ttic.edu)"
+
+ARG UBUNTU_VERSION=20.04
+
+# Base image
+FROM ripl/lcm:$UBUNTU_VERSION
 
 # arguments
 ARG INSTALL_DIR=/usr/local
@@ -16,6 +24,7 @@ RUN apt update && apt install -y \
     freeglut3-dev \
     libgtk-3-dev \
     libxmu-dev \
+    libjpeg8-dev \
     python3-numpy \
     python3-scipy \
     && rm -rf /var/lib/apt/lists/*
@@ -32,11 +41,13 @@ RUN mkdir -p /tmp/libbot2 && \
   #./scripts/setup/linux/ubuntu/$UBUNTU_DISTRIB_CODENAME/install_prereqs && \
   #rm -rf /var/lib/apt/lists/* && \
   cd .. && \
-  mkdir libbot2-build && \
-  # build libbot2
-  cd libbot2-build && \
-  cmake -DCMAKE_INSTALL_PREFIX=$LIBBOT2_INSTALL_DIR ../libbot2-master && \
-  make install && \
-  # remove source code
-  cd / && \
-  rm -rf /tmp/libbot2
+  mkdir libbot2-build 
+  
+#   && \
+#   # build libbot2
+#   cd libbot2-build && \
+#   cmake -DCMAKE_INSTALL_PREFIX=$LIBBOT2_INSTALL_DIR ../libbot2-master && \
+#   make install && \
+#   # remove source code
+#   cd / && \
+#   rm -rf /tmp/libbot2
