@@ -41,13 +41,11 @@ RUN mkdir -p /tmp/libbot2 && \
   #./scripts/setup/linux/ubuntu/$UBUNTU_DISTRIB_CODENAME/install_prereqs && \
   #rm -rf /var/lib/apt/lists/* && \
   cd .. && \
-  mkdir libbot2-build 
-  
-#   && \
-#   # build libbot2
-#   cd libbot2-build && \
-#   cmake -DCMAKE_INSTALL_PREFIX=$LIBBOT2_INSTALL_DIR ../libbot2-master && \
-#   make install && \
-#   # remove source code
-#   cd / && \
-#   rm -rf /tmp/libbot2
+  mkdir libbot2-build && \
+  # build libbot2
+  cd libbot2-build && \
+  cmake -DCMAKE_INSTALL_PREFIX=$LIBBOT2_INSTALL_DIR ../libbot2-master && \
+  make install && \
+  # remove source code
+  cd / && \
+  rm -rf /tmp/libbot2
