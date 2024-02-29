@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Load environment variables
+        uses: c-py/action-dotenv-to-setenv@v2
+        with:
+          env-file: ./.env
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -28,3 +32,19 @@ jobs:
           platforms: linux/arm64/v8,linux/amd64
           push: true
           tags: ripl/libbot2:latest
+      - name: Build and push previous
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/arm64/v8,linux/amd64
+          push: true
+          tags: ripl/libbot2:${{ env.UBUNTU_VERSION_PREVIOUS }}
+          build-args: UBUNTU_VERSION=${{ env.UBUNTU_VERSION_PREVIOUS }}
+      - name: Build and push latest
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/arm64/v8,linux/amd64
+          push: true
+          tags: ripl/libbot2:latest, ripl/libbot2:${{ env.UBUNTU_VERSION_LATEST }}
+          build-args: UBUNTU_VERSION=${{ env.UBUNTU_VERSION_LATEST }}
